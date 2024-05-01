@@ -1,0 +1,15 @@
+#viewport-hider-root {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0);
+  color: #fff;
+  text-align: center;
+  box-sizing: border-box;
+  z-index: 9999;
+}
