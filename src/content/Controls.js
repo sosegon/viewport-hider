@@ -2,17 +2,19 @@ import React, { useRef } from 'react';
 import { Box } from 'rebass';
 import Knob from './Knob';
 import Swapper from './Swapper';
+import { useHiderContext } from './useHiderContext';
 
-export default function Controls({ topRef, bottomRef, height }) {
+export default function Controls() {
+  const { controlsHeight } = useHiderContext();
   const controlsRef = useRef();
   return (
     <Box
       ref={controlsRef}
       sx={{
         pointerEvents: 'all',
-        height: `${height}px`,
+        height: `${controlsHeight}px`,
         position: 'absolute',
-        top: `calc(50% - ${height / 2}px)`,
+        top: `calc(50% - ${controlsHeight / 2}px)`,
         width: '100%',
         display: 'flex',
         flexDirection: 'row',
@@ -31,16 +33,8 @@ export default function Controls({ topRef, bottomRef, height }) {
         }}
       >
         <Box />
-        <Knob
-          topRef={topRef}
-          controlsRef={controlsRef}
-          controlsHeight={height}
-        />
-        <Swapper
-          topRef={topRef}
-          bottomRef={bottomRef}
-          controlsHeight={height}
-        />
+        <Knob controlsRef={controlsRef} />
+        <Swapper />
       </Box>
     </Box>
   );

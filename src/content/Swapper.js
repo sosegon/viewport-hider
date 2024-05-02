@@ -1,7 +1,10 @@
 import React, { useCallback, useState } from 'react';
 import { Box } from 'rebass';
+import { useHiderContext } from './useHiderContext';
 
-export default function Swapper({ bottomRef, topRef, controlsHeight }) {
+export default function Swapper() {
+  const { topRef, bottomRef, controlsHeight } = useHiderContext();
+
   const [swapped, setSwapped] = useState(false);
   const swap = useCallback(() => {
     if (bottomRef.current && topRef.current) {

@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import Controls from './content/Controls';
 import Pane from './content/Pane';
+import HiderProvider from './content/useHiderContext';
 import './content/styles.css';
 
 const CONTROLS_HEIGHT = 20;
@@ -25,15 +26,15 @@ function Content() {
   }, [topPaneRef, bottomPaneRef]);
 
   return (
-    <>
+    <HiderProvider
+      topRef={topPaneRef}
+      bottomRef={bottomPaneRef}
+      controlsHeight={CONTROLS_HEIGHT}
+    >
       <Pane ref={topPaneRef} sx={{ backdropFilter: 'blur(20px)' }} />
-      <Controls
-        height={CONTROLS_HEIGHT}
-        topRef={topPaneRef}
-        bottomRef={bottomPaneRef}
-      />
+      <Controls />
       <Pane ref={bottomPaneRef} sx={{ backdropFilter: 'blur(20px)' }} />
-    </>
+    </HiderProvider>
   );
 }
 

@@ -1,8 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { Box } from 'rebass';
 import styled from 'styled-components';
+import { useHiderContext } from './useHiderContext';
 
-export default function Knob({ topRef, controlsRef, controlsHeight }) {
+export default function Knob({ controlsRef }) {
+  const { topRef, controlsHeight } = useHiderContext();
+
   const isDraggingRef = useRef(false);
   const startYRef = useRef(0);
   const startHeightRef = useRef(0);
