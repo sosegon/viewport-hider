@@ -43,6 +43,4 @@ root.id = 'viewport-hider-root';
 
 document.body.append(root);
 
-setTimeout(() => {
-  ReactDOM.render(<Content />, document.getElementById('viewport-hider-root'));
-}, 1000);
+ReactDOM.render(<Content />, document.getElementById('viewport-hider-root'));
