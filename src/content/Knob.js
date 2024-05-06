@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import { Box } from 'rebass';
-import styled from 'styled-components';
+import { MdDragHandle } from 'react-icons/md';
 import { useHiderContext } from './useHiderContext';
+import { ControlWrapper } from './Controls.style';
 
 export default function Knob({ controlsRef }) {
   const { topRef, controlsHeight } = useHiderContext();
@@ -44,35 +44,15 @@ export default function Knob({ controlsRef }) {
   }, []);
 
   return (
-    <Box
+    <ControlWrapper
       onMouseDown={handleMouseDown}
       sx={{
-        width: `${2 * controlsHeight}px`,
+        width: `${3 * controlsHeight}px`,
         height: `${controlsHeight}px`,
-        color: '#fff',
-        boxSizing: 'border-box',
-        zIndex: '9999',
         cursor: 'ns-resize',
-        backgroundColor: '#fff',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-evenly',
-        px: '6px',
-        borderRadius: `${controlsHeight / 4}px`,
-        boxShadow: '0px 0px 1px 1px gray',
       }}
     >
-      <Line />
-      <Line />
-    </Box>
+      <MdDragHandle size={'100%'} />
+    </ControlWrapper>
   );
 }
-
-const Line = styled(Box).attrs(() => ({
-  sx: {
-    backgroundColor: 'gray',
-    height: '2px',
-    borderRadius: '1px',
-    width: '100%',
-  },
-}))``;

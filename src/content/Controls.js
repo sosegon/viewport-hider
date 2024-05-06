@@ -3,6 +3,7 @@ import { Box } from 'rebass';
 import Knob from './Knob';
 import Swapper from './Swapper';
 import { useHiderContext } from './useHiderContext';
+import { IconContext } from 'react-icons';
 
 export default function Controls() {
   const { controlsHeight } = useHiderContext();
@@ -22,20 +23,25 @@ export default function Controls() {
         zIndex: 1,
       }}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
-          gap: '8px',
-          borderImage:
-            'linear-gradient(to bottom, transparent 45%, gray 45% 55%, transparent 55%) 1 1 /0px 100vw/0px calc(100vw + 5px)',
-        }}
+      <IconContext.Provider
+        value={{ color: 'gray', className: 'global-class-name' }}
       >
-        <Box />
-        <Knob controlsRef={controlsRef} />
-        <Swapper />
-      </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            backgroundColor: 'white',
+            borderImage:
+              'linear-gradient(to bottom, transparent 45%, gray 45% 55%, transparent 55%) 1 1 /0px 100vw/0px calc(100vw + 5px)',
+            borderRadius: `${controlsHeight / 4}px`,
+            boxShadow: '0px 0px 1px 1px gray',
+          }}
+        >
+          <Knob controlsRef={controlsRef} />
+          <Swapper />
+        </Box>
+      </IconContext.Provider>
     </Box>
   );
 }
