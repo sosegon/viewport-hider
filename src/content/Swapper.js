@@ -15,6 +15,7 @@ export default function Swapper() {
         cursor: 'pointer',
         svg: {
           transform: `rotateZ(${swapped ? '-90deg' : '90deg'})`,
+          transition: 'transform 0.3s ease',
         },
       }}
     >
