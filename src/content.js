@@ -12,12 +12,11 @@ function Content() {
   const wrapperRef = useRef();
   const topPaneRef = useRef();
   const bottomPaneRef = useRef();
-  const topHeight = '50%';
 
   useEffect(() => {
     if (topPaneRef.current) {
-      topPaneRef.current.style.height = topHeight;
-      topPaneRef.current.style.width = '100%';
+      topPaneRef.current.style.height = `${window.innerHeight / 2}px`;
+      topPaneRef.current.style.width = `${window.innerWidth}px`;
       topPaneRef.current.style.pointerEvents = 'none';
       topPaneRef.current.style.opacity = 0;
     }

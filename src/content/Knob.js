@@ -16,9 +16,19 @@ export default function Knob({ controlsRef }) {
   function handleMouseDown(event) {
     isDraggingRef.current = true;
     startYRef.current = event.clientY;
-    startHeightRef.current = topRef.current.style.height;
+    startHeightRef.current = parseInt(
+      topRef.current.style.height.slice(0, -2),
+      10
+    );
     startXRef.current = event.clientX;
-    startWidthRef.current = topRef.current.style.width;
+    startWidthRef.current = parseInt(
+      topRef.current.style.width.slice(0, -2),
+      10
+    );
+  }
+
+  function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
   }
 
   // Function to handle mouse move event
@@ -26,20 +36,33 @@ export default function Knob({ controlsRef }) {
     event => {
       if (isDraggingRef.current) {
         const deltaY = event.clientY - startYRef.current;
-        const newHeight = `calc(${startHeightRef.current} + ${deltaY}px)`;
+        const newHeight = `${clamp(
+          startHeightRef.current + deltaY,
+          controlsSize,
+          window.innerHeight - controlsSize
+        )}px`;
         const deltaX = event.clientX - startXRef.current;
-        const newWidth = `calc(${startWidthRef.current} + ${deltaX}px)`;
-        console.log('handle move', { deltaX, isVertical });
+        const newWidth = `${clamp(
+          startWidthRef.current + deltaX,
+          controlsSize,
+          window.innerWidth - controlsSize
+        )}px`;
         if (isVertical) {
           topRef.current.style.height = newHeight;
-          controlsRef.current.style.top = `calc(${startHeightRef.current} + ${
-            deltaY - controlsSize / 2
-          }px)`;
+          const newTop = `${clamp(
+            startHeightRef.current + deltaY - controlsSize / 2,
+            controlsSize / 2,
+            window.innerHeight - controlsSize * 1.5
+          )}px`;
+          controlsRef.current.style.top = newTop;
         } else {
           topRef.current.style.width = newWidth;
-          controlsRef.current.style.left = `calc(${startWidthRef.current} + ${
-            deltaX - controlsSize / 2
-          }px)`;
+          const newLeft = `${clamp(
+            startWidthRef.current + deltaX - controlsSize / 2,
+            controlsSize / 2,
+            window.innerWidth - controlsSize * 1.5
+          )}px`;
+          controlsRef.current.style.left = newLeft;
         }
       }
     },
