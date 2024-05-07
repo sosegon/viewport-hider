@@ -14,6 +14,7 @@ export default function Knob({ controlsRef }) {
 
   // Function to handle mouse down event
   function handleMouseDown(event) {
+    event.preventDefault();
     isDraggingRef.current = true;
     startYRef.current = event.clientY;
     startHeightRef.current = parseInt(
