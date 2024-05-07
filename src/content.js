@@ -4,10 +4,12 @@ import Controls from './content/Controls';
 import Pane from './content/Pane';
 import HiderProvider from './content/useHiderContext';
 import './content/styles.css';
+import { Box } from 'rebass';
 
-const CONTROLS_HEIGHT = 20;
+const CONTROLS_SIZE = 20;
 
 function Content() {
+  const wrapperRef = useRef();
   const topPaneRef = useRef();
   const bottomPaneRef = useRef();
   const topHeight = '50%';
@@ -15,10 +17,12 @@ function Content() {
   useEffect(() => {
     if (topPaneRef.current) {
       topPaneRef.current.style.height = topHeight;
+      topPaneRef.current.style.width = '100%';
       topPaneRef.current.style.pointerEvents = 'none';
       topPaneRef.current.style.opacity = 0;
     }
     if (bottomPaneRef.current) {
+      bottomPaneRef.current.style.width = '100%';
       bottomPaneRef.current.style.flexGrow = 1;
       bottomPaneRef.current.style.pointerEvents = 'all';
       bottomPaneRef.current.style.opacity = 1;
@@ -27,13 +31,24 @@ function Content() {
 
   return (
     <HiderProvider
+      wrapperRef={wrapperRef}
       topRef={topPaneRef}
       bottomRef={bottomPaneRef}
-      controlsHeight={CONTROLS_HEIGHT}
+      controlsSize={CONTROLS_SIZE}
     >
-      <Pane ref={topPaneRef} sx={{ backdropFilter: 'blur(20px)' }} />
-      <Controls />
-      <Pane ref={bottomPaneRef} sx={{ backdropFilter: 'blur(20px)' }} />
+      <Box
+        ref={wrapperRef}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          width: '100%',
+          height: '100%',
+        }}
+      >
+        <Pane ref={topPaneRef} sx={{ backdropFilter: 'blur(20px)' }} />
+        <Controls />
+        <Pane ref={bottomPaneRef} sx={{ backdropFilter: 'blur(20px)' }} />
+      </Box>
     </HiderProvider>
   );
 }
