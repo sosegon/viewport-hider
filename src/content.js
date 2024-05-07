@@ -6,34 +6,32 @@ import HiderProvider from './content/useHiderContext';
 import './content/styles.css';
 import { Box } from 'rebass';
 
-const CONTROLS_SIZE = 20;
-
 function Content() {
   const wrapperRef = useRef();
-  const topPaneRef = useRef();
-  const bottomPaneRef = useRef();
+  const primaryRef = useRef();
+  const secondaryRef = useRef();
 
   useEffect(() => {
-    if (topPaneRef.current) {
-      topPaneRef.current.style.height = `${window.innerHeight / 2}px`;
-      topPaneRef.current.style.width = `${window.innerWidth}px`;
-      topPaneRef.current.style.pointerEvents = 'none';
-      topPaneRef.current.style.opacity = 0;
+    if (primaryRef.current) {
+      primaryRef.current.style.height = `${window.innerHeight / 2}px`;
+      primaryRef.current.style.width = `${window.innerWidth}px`;
+      primaryRef.current.style.pointerEvents = 'none';
+      primaryRef.current.style.opacity = 0;
     }
-    if (bottomPaneRef.current) {
-      bottomPaneRef.current.style.width = '100%';
-      bottomPaneRef.current.style.flexGrow = 1;
-      bottomPaneRef.current.style.pointerEvents = 'all';
-      bottomPaneRef.current.style.opacity = 1;
+    if (secondaryRef.current) {
+      secondaryRef.current.style.width = '100%';
+      secondaryRef.current.style.flexGrow = 1;
+      secondaryRef.current.style.pointerEvents = 'all';
+      secondaryRef.current.style.opacity = 1;
     }
-  }, [topPaneRef, bottomPaneRef]);
+  }, [primaryRef, secondaryRef]);
 
   return (
     <HiderProvider
       wrapperRef={wrapperRef}
-      topRef={topPaneRef}
-      bottomRef={bottomPaneRef}
-      controlsSize={CONTROLS_SIZE}
+      primaryRef={primaryRef}
+      secondaryRef={secondaryRef}
+      controlsSize={20}
     >
       <Box
         ref={wrapperRef}
@@ -44,9 +42,9 @@ function Content() {
           height: '100%',
         }}
       >
-        <Pane ref={topPaneRef} sx={{ backdropFilter: 'blur(20px)' }} />
+        <Pane ref={primaryRef} sx={{ backdropFilter: 'blur(20px)' }} />
         <Controls />
-        <Pane ref={bottomPaneRef} sx={{ backdropFilter: 'blur(20px)' }} />
+        <Pane ref={secondaryRef} sx={{ backdropFilter: 'blur(20px)' }} />
       </Box>
     </HiderProvider>
   );

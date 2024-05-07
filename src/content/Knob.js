@@ -4,7 +4,7 @@ import { useHiderContext } from './useHiderContext';
 import { ControlWrapper } from './Controls.style';
 
 export default function Knob({ controlsRef }) {
-  const { topRef, controlsSize, isVertical } = useHiderContext();
+  const { primaryRef, controlsSize, isVertical } = useHiderContext();
 
   const isDraggingRef = useRef(false);
   const startYRef = useRef(0);
@@ -18,12 +18,12 @@ export default function Knob({ controlsRef }) {
     isDraggingRef.current = true;
     startYRef.current = event.clientY;
     startHeightRef.current = parseInt(
-      topRef.current.style.height.slice(0, -2),
+      primaryRef.current.style.height.slice(0, -2),
       10
     );
     startXRef.current = event.clientX;
     startWidthRef.current = parseInt(
-      topRef.current.style.width.slice(0, -2),
+      primaryRef.current.style.width.slice(0, -2),
       10
     );
   }
@@ -49,7 +49,7 @@ export default function Knob({ controlsRef }) {
           window.innerWidth - controlsSize
         )}px`;
         if (isVertical) {
-          topRef.current.style.height = newHeight;
+          primaryRef.current.style.height = newHeight;
           const newTop = `${clamp(
             startHeightRef.current + deltaY - controlsSize / 2,
             controlsSize / 2,
@@ -57,7 +57,7 @@ export default function Knob({ controlsRef }) {
           )}px`;
           controlsRef.current.style.top = newTop;
         } else {
-          topRef.current.style.width = newWidth;
+          primaryRef.current.style.width = newWidth;
           const newLeft = `${clamp(
             startWidthRef.current + deltaX - controlsSize / 2,
             controlsSize / 2,
