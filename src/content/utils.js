@@ -8,3 +8,11 @@ export function clampStyle(value, min, max) {
     ? value
     : `${clamp(parsedValue, min, max)}px`;
 }
+
+export function convertScale(value, scale1, scale2) {
+  if (!scale1 || !scale2) {
+    return 0;
+  }
+
+  return (value * scale2) / scale1;
+}

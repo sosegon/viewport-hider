@@ -28,7 +28,7 @@ function Content() {
     }
     if (controlsRef.current) {
       controlsRef.current.style.top = `${(window.innerHeight - controlsSize) / 2}px`;
-      controlsRef.current.style.left = '0';
+      controlsRef.current.style.left = '0px';
     }
   }, [primaryRef, secondaryRef, controlsRef]);
 

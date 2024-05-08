@@ -6,7 +6,7 @@ import React, {
   useEffect,
 } from 'react';
 import { saveParam, getParam } from './persistance';
-import { clampStyle } from './utils';
+import { convertScale } from './utils';
 const HiderContext = createContext({});
 
 export const useHiderContext = () => useContext(HiderContext);
@@ -53,23 +53,23 @@ export default function HiderProvider({
 
       // Convert top pane to left pane
       const topPane = {
-        height: clampStyle(
-          primaryRef.current.style.height,
-          controlsSize,
-          window.innerWidth - controlsSize
+        height: convertScale(
+          parseInt(primaryRef.current.style.height),
+          window.innerHeight,
+          window.innerWidth
         ),
-        width: clampStyle(
-          primaryRef.current.style.width,
-          controlsSize,
-          window.innerHeight - controlsSize
+        width: convertScale(
+          parseInt(primaryRef.current.style.width),
+          window.innerWidth,
+          window.innerHeight
         ),
       };
-      primaryRef.current.style.width = !isVertical
-        ? `${window.innerWidth}px`
-        : topPane.height;
-      primaryRef.current.style.height = isVertical
-        ? `${window.innerHeight}px`
-        : topPane.width;
+      primaryRef.current.style.width = `${parseInt(
+        !isVertical ? window.innerWidth : topPane.height
+      )}px`;
+      primaryRef.current.style.height = `${parseInt(
+        isVertical ? window.innerHeight : topPane.width
+      )}px`;
 
       // Convert bottom pane to right pane
       const bottomPane = {
@@ -80,18 +80,22 @@ export default function HiderProvider({
       secondaryRef.current.style.height = bottomPane.width;
 
       // Update position of controls
-      const left = clampStyle(
-        controlsRef.current.style.left,
-        controlsSize / 2,
-        window.innerHeight - controlsSize * 1.5
-      );
-      const top = clampStyle(
-        controlsRef.current.style.top,
-        controlsSize / 2,
-        window.innerWidth - controlsSize * 1.5
-      );
-      controlsRef.current.style.top = left;
-      controlsRef.current.style.left = top;
+      const left = controlsRef.current.style.left;
+      const top = controlsRef.current.style.top;
+      controlsRef.current.style.top =
+        left === '0px'
+          ? '0px'
+          : `${parseInt(
+              parseInt(primaryRef.current.style.height.slice(0, -2)) -
+                controlsSize / 2
+            )}px`;
+      controlsRef.current.style.left =
+        top === '0px'
+          ? '0px'
+          : `${parseInt(
+              parseInt(primaryRef.current.style.width.slice(0, -2)) -
+                controlsSize / 2
+            )}px`;
 
       setIsVertical(!isVertical);
       saveParam('isVertical', !isVertical);
