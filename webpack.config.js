@@ -2,10 +2,14 @@ const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   entry: './src/content.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'content.js',
+  },
+  optimization: {
+    minimize: process.env.NODE_ENV === 'production',
   },
   module: {
     rules: [

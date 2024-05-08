@@ -4,6 +4,8 @@
   "description": "Chrome extension to hide browser viewport",
   "main": "index.js",
   "scripts": {
+    "dev": "webpack --config webpack.config.js",
+    "build": "NODE_ENV=production webpack --config webpack.config.js",
     "test": "jest"
   },
   "repository": {
