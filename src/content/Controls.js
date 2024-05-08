@@ -20,8 +20,6 @@ const Controls = forwardRef((props, ref) => {
         position: 'absolute',
         height: `${isVertical ? controlsSize + 'px' : '100%'}`,
         width: `${isVertical ? '100%' : controlsSize + 'px'}`,
-        left: isVertical ? '0' : `${(window.innerWidth - controlsSize) / 2}px`,
-        top: isVertical ? `${(window.innerHeight - controlsSize) / 2}px` : '0',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',

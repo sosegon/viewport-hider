@@ -11,6 +11,7 @@ function Content() {
   const primaryRef = useRef();
   const secondaryRef = useRef();
   const controlsRef = useRef();
+  const controlsSize = 20;
 
   useEffect(() => {
     if (primaryRef.current) {
@@ -25,7 +26,11 @@ function Content() {
       secondaryRef.current.style.pointerEvents = 'all';
       secondaryRef.current.style.opacity = 1;
     }
-  }, [primaryRef, secondaryRef]);
+    if (controlsRef.current) {
+      controlsRef.current.style.top = `${(window.innerHeight - controlsSize) / 2}px`;
+      controlsRef.current.style.left = '0';
+    }
+  }, [primaryRef, secondaryRef, controlsRef]);
 
   return (
     <HiderProvider
@@ -33,7 +38,7 @@ function Content() {
       primaryRef={primaryRef}
       secondaryRef={secondaryRef}
       controlsRef={controlsRef}
-      controlsSize={20}
+      controlsSize={controlsSize}
     >
       <Box
         ref={wrapperRef}
