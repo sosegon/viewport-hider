@@ -40,6 +40,12 @@ const Controls = forwardRef((props, ref) => {
             borderImage,
             borderRadius: `${controlsSize / 4}px`,
             boxShadow: '0px 0px 1px 1px gray',
+            opacity: 0.25,
+            transition: 'opacity 0.3s ease',
+            '&:hover': {
+              opacity: 1,
+              transition: 'opacity 0.3s ease',
+            },
           }}
         >
           <Direction />
