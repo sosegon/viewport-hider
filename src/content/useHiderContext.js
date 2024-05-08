@@ -6,7 +6,7 @@ import React, {
   useEffect,
 } from 'react';
 import { saveParam, getParam } from './persistance';
-import { clamp } from './utils';
+import { clampStyle } from './utils';
 const HiderContext = createContext({});
 
 export const useHiderContext = () => useContext(HiderContext);
@@ -68,26 +68,18 @@ export default function HiderProvider({
       secondaryRef.current.style.height = bottomPane.width;
 
       // Update position of controls
-      const left = controlsRef.current.style.left.slice(0, -2);
-      const adjustedLeft =
-        left === ''
-          ? left
-          : clamp(
-              parseInt(left),
-              controlsSize / 2,
-              window.innerHeight - controlsSize * 1.5
-            );
-      const top = controlsRef.current.style.top.slice(0, -2);
-      const adjustedTop =
-        top === ''
-          ? top
-          : clamp(
-              parseInt(top),
-              controlsSize / 2,
-              window.innerWidth - controlsSize * 1.5
-            );
-      controlsRef.current.style.top = left === '' ? left : `${adjustedLeft}px`;
-      controlsRef.current.style.left = top === '' ? top : `${adjustedTop}px`;
+      const left = clampStyle(
+        controlsRef.current.style.left,
+        controlsSize / 2,
+        window.innerHeight - controlsSize * 1.5
+      );
+      const top = clampStyle(
+        controlsRef.current.style.top,
+        controlsSize / 2,
+        window.innerWidth - controlsSize * 1.5
+      );
+      controlsRef.current.style.top = left;
+      controlsRef.current.style.left = top;
 
       setIsVertical(!isVertical);
       saveParam('isVertical', !isVertical);
