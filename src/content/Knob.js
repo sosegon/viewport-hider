@@ -86,15 +86,6 @@ export default function Knob() {
     };
   }, [handleMouseMove, handleMouseUp]);
 
-  useEffect(() => {
-    if ((isVertical || !isVertical) && controlsRef.current) {
-      const left = controlsRef.current.style.left;
-      const top = controlsRef.current.style.top;
-      controlsRef.current.style.left = top;
-      controlsRef.current.style.top = left;
-    }
-  }, [isVertical]);
-
   return (
     <ControlWrapper
       onMouseDown={handleMouseDown}

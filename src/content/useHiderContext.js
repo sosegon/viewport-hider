@@ -39,7 +39,12 @@ export default function HiderProvider({
   }, [secondaryRef, primaryRef, setSwapped, swapped]);
 
   const rotate = useCallback(() => {
-    if (wrapperRef.current && secondaryRef.current && primaryRef.current) {
+    if (
+      wrapperRef.current &&
+      secondaryRef.current &&
+      primaryRef.current &&
+      controlsRef.current
+    ) {
       // Change direction of wrapper
       const flexDirection = wrapperRef.current.style.flexDirection;
       wrapperRef.current.style.flexDirection =
@@ -61,10 +66,23 @@ export default function HiderProvider({
       secondaryRef.current.style.width = bottomPane.height;
       secondaryRef.current.style.height = bottomPane.width;
 
+      // Update position of controls
+      const left = controlsRef.current.style.left;
+      const top = controlsRef.current.style.top;
+      controlsRef.current.style.left = top;
+      controlsRef.current.style.top = left;
+
       setIsVertical(!isVertical);
       saveParam('isVertical', !isVertical);
     }
-  }, [wrapperRef, secondaryRef, primaryRef, isVertical, setIsVertical]);
+  }, [
+    wrapperRef,
+    secondaryRef,
+    primaryRef,
+    controlsRef,
+    isVertical,
+    setIsVertical,
+  ]);
 
   const saveRefsStyle = useCallback(() => {
     if (
