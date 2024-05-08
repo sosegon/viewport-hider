@@ -36,7 +36,7 @@ export default function HiderProvider({
       setSwapped(!swapped);
       saveParam('swapped', !swapped);
     }
-  }, [secondaryRef, primaryRef, setSwapped, swapped]);
+  }, [setSwapped, swapped]);
 
   const rotate = useCallback(() => {
     if (
@@ -75,14 +75,7 @@ export default function HiderProvider({
       setIsVertical(!isVertical);
       saveParam('isVertical', !isVertical);
     }
-  }, [
-    wrapperRef,
-    secondaryRef,
-    primaryRef,
-    controlsRef,
-    isVertical,
-    setIsVertical,
-  ]);
+  }, [isVertical, setIsVertical]);
 
   const saveRefsStyle = useCallback(() => {
     if (
@@ -117,7 +110,7 @@ export default function HiderProvider({
         })
       );
     }
-  }, [primaryRef, secondaryRef, controlsRef, wrapperRef]);
+  }, []);
 
   // Set swapped from stored value at start
   useEffect(() => {
