@@ -4,7 +4,7 @@ import { useHiderContext } from './useHiderContext';
 import { ControlWrapper } from './Controls.style';
 
 export default function Knob() {
-  const { primaryRef, controlsRef, controlsSize, isVertical } =
+  const { primaryRef, controlsRef, controlsSize, isVertical, saveRefsStyle } =
     useHiderContext();
 
   const isDraggingRef = useRef(false);
@@ -50,21 +50,21 @@ export default function Knob() {
           window.innerWidth - controlsSize
         )}px`;
         if (isVertical) {
-          primaryRef.current.style.height = newHeight;
+          if (primaryRef.current) primaryRef.current.style.height = newHeight;
           const newTop = `${clamp(
             startHeightRef.current + deltaY - controlsSize / 2,
             controlsSize / 2,
             window.innerHeight - controlsSize * 1.5
           )}px`;
-          controlsRef.current.style.top = newTop;
+          if (controlsRef.current) controlsRef.current.style.top = newTop;
         } else {
-          primaryRef.current.style.width = newWidth;
+          if (primaryRef.current) primaryRef.current.style.width = newWidth;
           const newLeft = `${clamp(
             startWidthRef.current + deltaX - controlsSize / 2,
             controlsSize / 2,
             window.innerWidth - controlsSize * 1.5
           )}px`;
-          controlsRef.current.style.left = newLeft;
+          if (controlsRef.current) controlsRef.current.style.left = newLeft;
         }
       }
     },
@@ -72,9 +72,10 @@ export default function Knob() {
   );
 
   // Function to handle mouse up event
-  function handleMouseUp() {
+  const handleMouseUp = useCallback(() => {
     isDraggingRef.current = false;
-  }
+    saveRefsStyle();
+  }, [saveRefsStyle]);
 
   useEffect(() => {
     document.addEventListener('mousemove', handleMouseMove);
@@ -83,10 +84,10 @@ export default function Knob() {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [handleMouseMove]);
+  }, [handleMouseMove, handleMouseUp]);
 
   useEffect(() => {
-    if (isVertical || !isVertical) {
+    if ((isVertical || !isVertical) && controlsRef.current) {
       const left = controlsRef.current.style.left;
       const top = controlsRef.current.style.top;
       controlsRef.current.style.left = top;
