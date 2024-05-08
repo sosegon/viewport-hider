@@ -51,7 +51,7 @@ export default function HiderProvider({
       wrapperRef.current.style.flexDirection =
         flexDirection === 'row' ? 'column' : 'row';
 
-      // Convert top pane to right pane
+      // Convert top pane to left pane
       const topPane = {
         height: clampStyle(
           primaryRef.current.style.height,
@@ -64,10 +64,14 @@ export default function HiderProvider({
           window.innerHeight - controlsSize
         ),
       };
-      primaryRef.current.style.width = topPane.height;
-      primaryRef.current.style.height = topPane.width;
+      primaryRef.current.style.width = !isVertical
+        ? `${window.innerWidth}px`
+        : topPane.height;
+      primaryRef.current.style.height = isVertical
+        ? `${window.innerHeight}px`
+        : topPane.width;
 
-      // Convert bottom pane to left pane
+      // Convert bottom pane to right pane
       const bottomPane = {
         height: secondaryRef.current.style.height,
         width: secondaryRef.current.style.width,
