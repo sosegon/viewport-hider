@@ -10,6 +10,7 @@ function Content() {
   const wrapperRef = useRef();
   const primaryRef = useRef();
   const secondaryRef = useRef();
+  const controlsRef = useRef();
 
   useEffect(() => {
     if (primaryRef.current) {
@@ -31,6 +32,7 @@ function Content() {
       wrapperRef={wrapperRef}
       primaryRef={primaryRef}
       secondaryRef={secondaryRef}
+      controlsRef={controlsRef}
       controlsSize={20}
     >
       <Box
@@ -43,7 +45,7 @@ function Content() {
         }}
       >
         <Pane ref={primaryRef} sx={{ backdropFilter: 'blur(20px)' }} />
-        <Controls />
+        <Controls ref={controlsRef} />
         <Pane ref={secondaryRef} sx={{ backdropFilter: 'blur(20px)' }} />
       </Box>
     </HiderProvider>

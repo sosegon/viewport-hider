@@ -8,6 +8,7 @@ export default function HiderProvider({
   wrapperRef,
   primaryRef,
   secondaryRef,
+  controlsRef,
   controlsSize,
   children,
 }) {
@@ -58,9 +59,10 @@ export default function HiderProvider({
 
   const context = {
     wrapperRef,
-    controlsSize,
     primaryRef,
     secondaryRef,
+    controlsRef,
+    controlsSize,
     swap,
     swapped,
     isVertical,

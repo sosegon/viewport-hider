@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, forwardRef } from 'react';
 import { Box } from 'rebass';
 import Knob from './Knob';
 import Swapper from './Swapper';
@@ -6,16 +6,15 @@ import { useHiderContext } from './useHiderContext';
 import { IconContext } from 'react-icons';
 import Direction from './Direction';
 
-export default function Controls() {
+const Controls = forwardRef((props, ref) => {
   const { controlsSize, isVertical } = useHiderContext();
-  const controlsRef = useRef();
   const borderImage = isVertical
     ? 'linear-gradient(to bottom, transparent 45%, gray 45% 55%, transparent 55%) 1 1 /0px 100vw/0px calc(100vw + 5px)'
     : 'linear-gradient(to right, transparent 45%, gray 45% 55%, transparent 55%) 1 1 /100vh 0px/calc(100vh + 5px) 0px';
 
   return (
     <Box
-      ref={controlsRef}
+      ref={ref}
       sx={{
         pointerEvents: 'all',
         height: `${isVertical ? controlsSize + 'px' : '100%'}`,
@@ -46,10 +45,14 @@ export default function Controls() {
           }}
         >
           <Direction />
-          <Knob controlsRef={controlsRef} />
+          <Knob />
           <Swapper />
         </Box>
       </IconContext.Provider>
     </Box>
   );
-}
+});
+
+Controls.displayName = 'Controls';
+
+export default Controls;

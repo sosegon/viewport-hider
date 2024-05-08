@@ -3,8 +3,9 @@ import { MdDragHandle } from 'react-icons/md';
 import { useHiderContext } from './useHiderContext';
 import { ControlWrapper } from './Controls.style';
 
-export default function Knob({ controlsRef }) {
-  const { primaryRef, controlsSize, isVertical } = useHiderContext();
+export default function Knob() {
+  const { primaryRef, controlsRef, controlsSize, isVertical } =
+    useHiderContext();
 
   const isDraggingRef = useRef(false);
   const startYRef = useRef(0);
