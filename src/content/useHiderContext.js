@@ -53,8 +53,16 @@ export default function HiderProvider({
 
       // Convert top pane to right pane
       const topPane = {
-        height: primaryRef.current.style.height,
-        width: primaryRef.current.style.width,
+        height: clampStyle(
+          primaryRef.current.style.height,
+          controlsSize,
+          window.innerWidth - controlsSize
+        ),
+        width: clampStyle(
+          primaryRef.current.style.width,
+          controlsSize,
+          window.innerHeight - controlsSize
+        ),
       };
       primaryRef.current.style.width = topPane.height;
       primaryRef.current.style.height = topPane.width;
