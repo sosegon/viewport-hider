@@ -6,7 +6,7 @@ import React, {
   useEffect,
 } from 'react';
 import { saveParam, getParam } from './persistance';
-import { convertScale } from './utils';
+import { convertScale, clampStyle } from './utils';
 const HiderContext = createContext({});
 
 export const useHiderContext = () => useContext(HiderContext);
@@ -53,15 +53,23 @@ export default function HiderProvider({
 
       // Convert top pane to left pane
       const topPane = {
-        height: convertScale(
-          parseInt(primaryRef.current.style.height),
-          window.innerHeight,
-          window.innerWidth
+        height: clampStyle(
+          convertScale(
+            parseInt(primaryRef.current.style.height),
+            window.innerHeight,
+            window.innerWidth
+          ),
+          controlsSize,
+          window.innerWidth - controlsSize
         ),
-        width: convertScale(
-          parseInt(primaryRef.current.style.width),
-          window.innerWidth,
-          window.innerHeight
+        width: clampStyle(
+          convertScale(
+            parseInt(primaryRef.current.style.width),
+            window.innerWidth,
+            window.innerHeight
+          ),
+          controlsSize,
+          window.innerHeight - controlsSize
         ),
       };
       primaryRef.current.style.width = `${parseInt(
@@ -85,17 +93,21 @@ export default function HiderProvider({
       controlsRef.current.style.top =
         left === '0px'
           ? '0px'
-          : `${parseInt(
+          : `${clampStyle(
               parseInt(primaryRef.current.style.height.slice(0, -2)) -
-                controlsSize / 2
-            )}px`;
+                controlsSize / 2,
+              controlsSize / 2,
+              window.innerHeight - controlsSize * 1.5
+            )}`;
       controlsRef.current.style.left =
         top === '0px'
           ? '0px'
-          : `${parseInt(
+          : `${clampStyle(
               parseInt(primaryRef.current.style.width.slice(0, -2)) -
-                controlsSize / 2
-            )}px`;
+                controlsSize / 2,
+              controlsSize / 2,
+              window.innerWidth - controlsSize * 1.5
+            )}`;
 
       setIsVertical(!isVertical);
       saveParam('isVertical', !isVertical);
