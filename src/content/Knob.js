@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useCallback } from 'react';
 import { MdDragHandle } from 'react-icons/md';
 import { useHiderContext } from './useHiderContext';
 import { ControlWrapper } from './Controls.style';
+import { clamp } from './utils';
 
 export default function Knob() {
   const { primaryRef, controlsRef, controlsSize, isVertical, saveRefsStyle } =
@@ -27,10 +28,6 @@ export default function Knob() {
       primaryRef.current.style.width.slice(0, -2),
       10
     );
-  }
-
-  function clamp(value, min, max) {
-    return Math.min(Math.max(value, min), max);
   }
 
   // Function to handle mouse move event
