@@ -149,6 +149,26 @@ export default function HiderProvider({
     }
   }, []);
 
+  // Sets initial style in elements
+  useEffect(() => {
+    if (primaryRef.current) {
+      primaryRef.current.style.height = `${window.innerHeight / 2}px`;
+      primaryRef.current.style.width = `${window.innerWidth}px`;
+      primaryRef.current.style.pointerEvents = 'none';
+      primaryRef.current.style.opacity = 0;
+    }
+    if (secondaryRef.current) {
+      secondaryRef.current.style.width = '100%';
+      secondaryRef.current.style.flexGrow = 1;
+      secondaryRef.current.style.pointerEvents = 'all';
+      secondaryRef.current.style.opacity = 1;
+    }
+    if (controlsRef.current) {
+      controlsRef.current.style.top = `${(window.innerHeight - controlsSize) / 2}px`;
+      controlsRef.current.style.left = '0px';
+    }
+  }, [primaryRef, secondaryRef, controlsRef]);
+
   // Set swapped from stored value at start
   useEffect(() => {
     getParam('swapped', res => {
