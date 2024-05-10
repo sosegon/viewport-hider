@@ -1,18 +1,29 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Box } from 'rebass';
 import styled from 'styled-components';
 import { MdOutlineToggleOff, MdOutlineToggleOn } from 'react-icons/md';
 import { IconContext } from 'react-icons';
+import { saveParam, getParam } from '../common/persistance';
 
 function Popup() {
   const [on, setOn] = useState(true);
   const toggle = useCallback(() => {
     setOn(!on);
+    saveParam('on', !on);
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       chrome.tabs.sendMessage(tabs[0].id, { command: 'toggle', value: !on });
     });
   }, [on, setOn]);
+
+  useEffect(() => {
+    getParam('on', res => {
+      const savedOn = res['on'] ?? on;
+      if (savedOn !== on) {
+        setOn(savedOn);
+      }
+    });
+  }, []);
 
   return (
     <Box>

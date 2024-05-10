@@ -5,7 +5,7 @@ import React, {
   useState,
   useEffect,
 } from 'react';
-import { saveParam, getParam } from './persistance';
+import { saveParam, getParam } from '../common/persistance';
 import { convertScale, clampStyle } from './utils';
 const HiderContext = createContext({});
 
@@ -193,6 +193,15 @@ export default function HiderProvider({
           wrapperRef.current.style[k] = styles.wrapper[k];
         });
       }
+    });
+  }, []);
+
+  // Set visibility at start
+  useEffect(() => {
+    getParam('on', res => {
+      const savedOn = res['on'] ?? true;
+      const root = document.getElementById('viewport-hider-root');
+      root.style.display = savedOn ? 'flex' : 'none';
     });
   }, []);
 
