@@ -4,7 +4,7 @@ import { Box } from 'rebass';
 import styled from 'styled-components';
 import { MdOutlineToggleOff, MdOutlineToggleOn } from 'react-icons/md';
 import { IconContext } from 'react-icons';
-import { saveParam, getParam } from '../common/persistance';
+import { saveParam, getParam } from 'Common/persistance';
 
 function Popup() {
   const [on, setOn] = useState(true);

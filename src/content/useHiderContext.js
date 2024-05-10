@@ -5,7 +5,7 @@ import React, {
   useState,
   useEffect,
 } from 'react';
-import { saveParam, getParam } from '../common/persistance';
+import { saveParam, getParam } from 'Common/persistance';
 import { convertScale, clampStyle } from './utils';
 const HiderContext = createContext({});
 
