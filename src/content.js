@@ -14,6 +14,15 @@ function Content() {
   const controlsSize = 20;
 
   useEffect(() => {
+    chrome.runtime.onMessage.addListener(({ command, value }) => {
+      const root = document.getElementById('viewport-hider-root');
+      if (command === 'toggle' && root) {
+        root.style.display = value ? 'flex' : 'none';
+      }
+    });
+  }, []);
+
+  useEffect(() => {
     if (primaryRef.current) {
       primaryRef.current.style.height = `${window.innerHeight / 2}px`;
       primaryRef.current.style.width = `${window.innerWidth}px`;
