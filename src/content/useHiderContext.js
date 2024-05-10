@@ -205,6 +205,16 @@ export default function HiderProvider({
     });
   }, []);
 
+  // Receives toggle from popup
+  useEffect(() => {
+    chrome.runtime.onMessage.addListener(({ command, value }) => {
+      const root = document.getElementById('viewport-hider-root');
+      if (command === 'toggle' && root) {
+        root.style.display = value ? 'flex' : 'none';
+      }
+    });
+  }, []);
+
   const context = {
     wrapperRef,
     primaryRef,
